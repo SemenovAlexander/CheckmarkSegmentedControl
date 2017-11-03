@@ -167,6 +167,12 @@ open class CheckmarkSegmentedControl: UIControl {
         borderLayer.strokeColor = option.borderColor.cgColor
         borderLayer.strokeEnd = 0
         borderLayer.masksToBounds = true
+        if let nonSelectedBorderColor = option.nonSelectedBorderColor {
+            // make contrast border to avoid merging circle with backround
+            borderLayer.borderWidth = 1
+            borderLayer.borderColor = nonSelectedBorderColor.cgColor
+        }
+
         
         borderLayer.path = UIBezierPath(roundedRect: borderLayer.bounds, cornerRadius: cornerRadius).cgPath
         
@@ -249,13 +255,15 @@ public struct CheckmarkOption: CustomStringConvertible {
     public let title: String
     public let borderColor: UIColor
     public let fillColor: UIColor
+    public let nonSelectedBorderColor: UIColor?
     public var description: String {
         return "CheckmarkOption[title: \(title)]"
     }
     
-    public init(title: String, borderColor: UIColor = UIColor.black, fillColor: UIColor = UIColor.lightGray) {
+    public init(title: String, borderColor: UIColor = UIColor.black, fillColor: UIColor = UIColor.lightGray, nonSelectedBorderColor: UIColor? = nil) {
         self.title = title
         self.borderColor = borderColor
         self.fillColor = fillColor
+        self.nonSelectedBorderColor = nonSelectedBorderColor
     }
 }
