@@ -219,7 +219,19 @@ open class CheckmarkSegmentedControl: UIControl {
         animation.fromValue = 0.0
         animation.toValue = 1.0
 
+        // remove border, which were added to make option contrast if any
+        if layer.borderWidth > 0.0 {
+            let borderAnimationKey = "borderWidth"
+            let borderAnimation: CABasicAnimation = CABasicAnimation(keyPath: borderAnimationKey)
+            borderAnimation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+            borderAnimation.duration = animationLength
+            borderAnimation.fromValue = 1.0
+            borderAnimation.toValue = 0.0
+            layer.add(borderAnimation, forKey: borderAnimationKey)
+        }
+
         layer.add(animation, forKey: animationKey)
+
     }
     
     // MARK: respond to touches
